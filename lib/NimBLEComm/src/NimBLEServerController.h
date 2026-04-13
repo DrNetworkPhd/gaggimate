@@ -70,6 +70,7 @@ class NimBLEServerController : public NimBLEServerCallbacks, public NimBLECharac
     char steamBtnBuffer[4]{};
     char autotuneResultBuffer[64]{};
     char tofBuffer[16]{};
+    char volumetricBuffer[16]{};
 
     // BLEServerCallbacks overrides
     void onConnect(NimBLEServer *pServer) override;

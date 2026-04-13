@@ -135,7 +135,8 @@ void NimBLEServerController::sendAutotuneResult(float Kp, float Ki, float Kd) {
 
 void NimBLEServerController::sendVolumetricMeasurement(float value) {
     if (deviceConnected) {
-        volumetricMeasurementChar->setValue(float_to_string(value));
+        snprintf(volumetricBuffer, sizeof(volumetricBuffer), "%.2f", value);
+        volumetricMeasurementChar->setValue(volumetricBuffer);
         volumetricMeasurementChar->notify();
     }
 }

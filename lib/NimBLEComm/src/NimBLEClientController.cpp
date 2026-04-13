@@ -199,13 +199,14 @@ void NimBLEClientController::sendPumpModelCoeffs(const String &pumpModelCoeffs) 
 
 void NimBLEClientController::setPressureScale(float scale) {
     if (client->isConnected() && pressureScaleChar != nullptr) {
-        pressureScaleChar->writeValue(float_to_string(scale));
+        snprintf(pressureScaleBuffer, sizeof(pressureScaleBuffer), "%.3f", scale);
+        pressureScaleChar->writeValue(pressureScaleBuffer);
     }
 }
 
 void NimBLEClientController::sendLedControl(uint8_t channel, uint8_t brightness) {
     if (client->isConnected() && ledControlChar != nullptr) {
-        ledControlChar->writeValue(String(channel) + "," + String(brightness));
+        ledControlChar->writeValue(String(channel) + "," + String(brightness), false);
     }
 }
 
@@ -217,7 +218,7 @@ void NimBLEClientController::sendAltControl(bool pinState) {
 
 void NimBLEClientController::sendPing() {
     if (pingChar != nullptr && client->isConnected()) {
-        pingChar->writeValue("1");
+        pingChar->writeValue("1", false);
     }
 }
 
